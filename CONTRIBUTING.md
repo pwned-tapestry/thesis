@@ -15,13 +15,9 @@
 For example: 
 `$ git co -b feature_api_usernames#11`
 or
-`$ git co -b feature_api_usernames#11`
-or
 `$ git co -b bugfix_panel_swipe#24`
 
 Added issue number to branch name instructions.
-
-`$ git co -b bugfix_panel_swipe#24`
 
 1. Add and commit to your code to your feature branch.
 
