@@ -6,7 +6,7 @@ var mongodb = require('../database/mongoDb');
 
 var ScheduleSchema = new mongodb.Schema({
   courseId: mongodb.Schema.Types.ObjectId,
-  date: Date,
+  date: String,
   teetimes: [{
     time: String,
     user: String,

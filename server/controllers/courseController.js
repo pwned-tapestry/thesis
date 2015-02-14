@@ -38,9 +38,19 @@ var findCourses = function(data, callback){
 
 };
 
+var updateCourse = function(findData, updateData, callback) {
+  Course.update(findData, updateData, function(error, numAffected){
+    if (error) {
+      return callback && callback(error, null);
+    }
+    return callback && callback(null, numAffected);
+  });
+};
+
 
 module.exports = {
   addCourse: addCourse,
   findCourse: findCourse,
-  findCourses: findCourses
+  findCourses: findCourses,
+  updateCourse: updateCourse
 };
