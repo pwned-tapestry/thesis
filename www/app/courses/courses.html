@@ -1,0 +1,15 @@
+<!-- 
+  This template gets placed in the Course tab's <ion-nav-view> directive.
+  It was wired up in the app config (app.js)
+  The 'courses' data comes from its $scope within CourseIndexCtrl (controller.js)
+-->
+<ion-view title="Course Information">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="course in courses" type="item-text-wrap" href="#/tab/course/{{course.id}}">
+        <h3>{{course.title}}</h3>
+        <p>{{course.description}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
