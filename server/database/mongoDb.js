@@ -9,20 +9,20 @@ var mongoose = require('mongoose');
 
 // open mongo database
 // path and authentication in config.js
-var db = mongoose.connect(global.mongoDb.path, {
+mongoose.connect(global.mongoDb.path, {
   user: global.mongoDb.user,
   pass: global.mongoDb.pass
 });
 
 
 // on connection success ...
-db.connection.on('connected', function(){
+mongoose.connection.on('connected', function(){
   if (global.environment === 'dev') {
     console.log('Mongo database connected.');
   }
 });
 // on connection error ...
-db.connection.on('error', function(error){
+mongoose.connection.on('error', function(error){
   if (global.environment === 'dev') {
     console.log('Mongo database error.');
     return console.log('>', Error);
@@ -31,4 +31,4 @@ db.connection.on('error', function(error){
 
 
 
-module.exports.mongodb = db;
+module.exports = mongoose;
