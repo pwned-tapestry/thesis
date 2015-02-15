@@ -1,0 +1,15 @@
+.round-button{
+  width: 200px;
+  height: 200px;
+  border-radius: 200px;
+}
+.viewPortCenter {
+  margin: auto;
+  top: 25%;
+}
+.absoluteCenter{
+  text-align: center;
+  line-height: 300%;
+  font-family: Garamond;
+  font-size: 64px;
+}
