@@ -62,16 +62,67 @@ var addSchedule = function(data, callback) {
 var findSchedule = function(data, callback) {
   Schedule.findOne(data, function(error, schedule){
     if (error) {
-      return callback && callback(error);
+      return callback && callback(error, null);
     }
-    return callback && callback(schedule);
+    return callback && callback(null, schedule);
   });
 };
 
+var findSchedules = function(data, callback) {
+  Schedule.find(data, function(error, schedules){
+    if (error) {
+      return callback && callback(error, null);
+    }
+    return callback && callback(null, schedules);
+  });
+};
+
+// id = courseId
+// date = 'MMDDYYYY' style date
+// start = 'HHMM' start time
+// end = 'HHMM' end time
+var hasTeeTime = function(data, callback) {
+  Schedule.findOne({ courseId: data.courseId, date: data.date }, function(error, schedule){
+    if (error) {
+      return callback && callback(error, null);
+    }
+    // This is stupid but required. messing with the array live changes it's length causing endless grief.
+    // Instead, we build a new 'avail' array and attach it after the scan ...
+    var availableTeeTimes = [];
+    for (var i = 0; i < schedule.teetimes.length; i++) {
+      if (schedule.teetimes[i].user === null && schedule.teetimes[i].time > data.start && schedule.teetimes[i].time < data.end) {
+        availableTeeTimes.push(schedule.teetimes[i]);
+      }
+    }
+    schedule.teetimes = availableTeeTimes;
+    return callback && callback(null, schedule);
+  });
+};
+
+// id = courseId
+// date = 'MMDDYYYY' style date
+// time = 'HHMM' time to book
+// user = userId
+// [closest] = boolean (option) - find closest match - default TRUE
+var bookTeeTime = function(data, callback) {
+  data.closest = data.closest || true;
+
+  Schedule.findOne({ courseId: data.courseId, date: data.date }, function(error, schedule) {
+    if (error) {
+      return callback && callback(error, null);
+    }
+
+
+
+  });
+
+};
 
 
 
 module.exports = {
   addSchedule: addSchedule,
-  findSchedule: findSchedule
+  findSchedule: findSchedule,
+  findSchedules: findSchedules,
+  hasTeeTime: hasTeeTime
 };
