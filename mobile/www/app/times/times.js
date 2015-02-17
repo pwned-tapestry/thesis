@@ -11,3 +11,4 @@ angular.module('app.times', [])
     }
   });
 });
+//redirect to times
