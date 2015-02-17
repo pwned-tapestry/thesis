@@ -26,6 +26,7 @@ userRouter
     // TODO: error checking Wayne!
     userController.addUser(request.body, function(error, user){
       if (error) {
+        response.status(400);
         return response.end(error);
       }
       response.json(user);
@@ -39,6 +40,16 @@ userRouter
       response.json(user);
     });
   })
+  // route for Toly
+  //.get('/name/:name', function(request, response){
+  //  userController.findUser({ first: request.params.name }, function(error, user){
+  //    if (error) {
+  //      response.status(400);
+  //      return response.end(error);
+  //    }
+  //    response.json(user);
+  //  });
+  //})
   .put('/:cell', function(request, response){
     userController.updateUser({
       cell: request.params.cell

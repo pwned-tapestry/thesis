@@ -6,6 +6,7 @@
 var User = require('../models/userModelMongo');
 
 var addUser = function(data, callback) {
+  // TODO: add validation code here
   var user = new User(data);
 
   user.save(function(error, user){

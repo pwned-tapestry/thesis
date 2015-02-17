@@ -14,6 +14,15 @@ scheduleRouter
       response.json(schedules);
     });
   })
+  // send body.courseId and body.date
+  .post('/', function(request, response){
+    scheduleController.addSchedule(request.body, function(error, schedule){
+      if (error) {
+        return response.end(error);
+      }
+      response.json(schedule);
+    });
+  })
   .get('/:id/:date', function(request, response){
     scheduleController.findSchedule({ courseId: request.params.id, date: request.params.date }, function(error, schedule){
       if (error) {

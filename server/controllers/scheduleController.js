@@ -27,7 +27,7 @@ var nextTime = function(timeIn, timeInc) {
   var hours = Number(timeIn.slice(0,2));
   var minutes = Number(timeIn.slice(2));
   // add timeInc for next teetime
-  minutes += timeInc;
+  minutes += +timeInc;
   if (minutes > 59) {     // wrap hours
     minutes -= 60;
     hours += 1;
@@ -39,7 +39,7 @@ var nextTime = function(timeIn, timeInc) {
 
 var addSchedule = function(data, callback) {
 
-  // get a schedule for the whoe day
+  // get a schedule for the whole day
   var teetimes = makeSchedule(data.start, data.end, data.minutes);
   // prep data to save
   var scheduleData = {
@@ -89,6 +89,7 @@ var hasTeeTime = function(data, callback) {
     // This is stupid but required. messing with the array live changes it's length causing endless grief.
     // Instead, we build a new 'avail' array and attach it after the scan ...
     var availableTeeTimes = [];
+    if (schedule === null) return callback(null, null);
     for (var i = 0; i < schedule.teetimes.length; i++) {
       if (schedule.teetimes[i].user === null && schedule.teetimes[i].time > data.start && schedule.teetimes[i].time < data.end) {
         availableTeeTimes.push(schedule.teetimes[i]);
