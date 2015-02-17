@@ -1,7 +1,16 @@
-<ion-view title="Times Available">
-  <ion-content>
-    <a class="button button-positive inline-button timeAlign" href="#/tab/invite">09:00am</a>
-    <a class="button button-positive inline-button timeAlign" href="#/tab/invite">12:00pm</a>
-    <a class="button button-positive inline-button timeAlign" href="#/tab/invite">04:00pm</a>
+<ion-view title="Book Tee-Time">
+  <ion-content >
+
+    <ion-list min-height="500px">
+      <ion-item class="time-list scroll-content2"  type="item-text-wrap" href="#/tab/course/{{course.id}}">
+        <h3>Course Name</h3>
+        <p>Course Description</p>
+      </ion-item>
+    </ion-list>
+
+    <a class="button button-positive inline-button timeAlign" href="#/tab/invite">09:00am-11:00am</a>
+    <a class="button button-positive inline-button timeAlign" href="#/tab/invite">11:00am-01:00pm</a>
+    <a class="button button-positive inline-button timeAlign" href="#/tab/invite">01:00pm-03:00pm</a>
+
   </ion-content>
 </ion-view>

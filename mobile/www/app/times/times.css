@@ -1,4 +1,17 @@
 .timeAlign{
-  margin-top: 25%;
-  margin-left: 40%;
+  margin-top: 5%;
+  margin-left: 33%;
+  min-height: 50px;
+  line-height: 300%;
+}
+
+.time-list{
+  min-height: 350px;
+  background-color: rgba(255,255,255,0.2);
+  -webkit-filter: blur(2px);
+}
+
+.scroll-content2 {
+  background: url("http://clubfitterdurham.com/wp-content/uploads/2011/05/Golf_Pushdown_2.jpg") no-repeat left top;
+  background-size: cover;
 }
