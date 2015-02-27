@@ -121,7 +121,8 @@ var bookTeeTime = function(data, callback) {
     for (var i = 0; i < schedule.teetimes.length; i++) {
       if (schedule.teetimes[i]._id.toString() === data.teetimeId) {
         schedule.teetimes[i].reserved = true;
-        schedule.teetimes[i].reservedBy = data.userId;
+        //schedule.teetimes[i].reservedBy = data.userId;
+        schedule.teetimes[i].reservedBy = data.cell;
 
         schedule.save(function(error, data){
           if (error) {

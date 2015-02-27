@@ -10,13 +10,17 @@
 
   `$ git remote add upstream https://github.com/pwned-tapestry/thesis`
 
-1. Checkout the development branch.
+1. From your local master, checkout a feature_branch to develop on. Name branch after its purpose and add the issue number at the end of its name. Work on that branch.
 
-  `git checkout development`
+For example: 
 
-  Note: The first time you do this, you may have to check it out from your fork.
-  
-  `git checkout -b origin/development`
+`$ git co -b feature_api_usernames#11`
+
+or
+
+`$ git co -b bugfix_panel_swipe#24`
+
+1. Add and commit to your code to your feature branch.
 
 1. From your local development, checkout a feature_branch to develop on. Name branch after its purpose and add the issue number at the end of its name. Work on that branch.
 
