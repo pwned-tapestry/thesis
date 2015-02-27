@@ -6,6 +6,7 @@ var userRouter = require('./routes/userRouter');
 var courseRouter = require('./routes/courseRouter');
 var scheduleRouter = require('./routes/scheduleRouter');
 var coreRouter = require('./routes/coreRouter');
+var seedRouter = require('./routes/seedRouter');
 
 var app = express();
 
@@ -19,5 +20,8 @@ app.use('/api', coreRouter);
 app.use('/api/user', userRouter);
 app.use('/api/course', courseRouter);
 app.use('/api/schedule', scheduleRouter);
+
+// delete this line before depolyment
+app.use('/api/seed', seedRouter);
 
 app.listen(8080);
