@@ -1,13 +1,21 @@
-// Twilio Credentials 
+// Twilio Credentials :
 var config = require('../config.js');
 var accountSid = config.twilioKeys.accountSid;
 var authToken = config.twilioKeys.authToken;
  
-//require the Twilio module and create a REST client 
+//Require the Twilio module and create a REST client.
 var client = require('twilio')(accountSid, authToken); 
 var fromNum = "+16619276630";
 var telephony = {};
 
+/**
+ * Sends a templated message with the Twilio API.
+ * Note, Twilio expects all strings, and numbers to be formatted with a country code.
+ * Please see the Twilio API docs for more detail.
+ * 
+ * @param  {[object]} data [Holds content, name, and number (all strings)]
+ * @return {[None]}      [No return value.]
+ */
 telephony.sendMessage = function(data){
   var msgContent = "Hello "+ data.userName +"! You are booked for *Party_Size* at *Course Name*, at *Time*.";
 
@@ -30,6 +38,12 @@ telephony.sendMessage = function(data){
   });
 }
 
+/**
+ * Sends templated invite link to a user.
+ * Todo: commenting
+ * @param  {[type]} data [description]
+ * @return {[type]}      [description]
+ */
 telephony.sendInviteLinks = function(data) {
   console.log("sendInviteLinks called with data:", data);
   for (var i = 0; i < data.cells.length; i++){

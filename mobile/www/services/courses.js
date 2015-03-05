@@ -8,7 +8,7 @@ function CourseService($http, $q) {
   function getCoursesWithTeeTimes() {
     var deferred = $q.defer();
     var that = this;
-    $http.get("http://localhost:8080/api/coursesWithTeeTimes")
+    $http.get("http://localhost:1337/api/coursesWithTeeTimes")
       .success(function(courses, status, headers, config) {
         console.log("courses :", courses);
         console.log("Received data via HTTP");
@@ -40,11 +40,11 @@ function CourseService($http, $q) {
     };
 
     //create a new user
-    $http.post("http://localhost:8080/api/user", newUser)
+    $http.post("http://localhost:1337/api/user", newUser)
 
     .success(function(returnedUser){
       //then send a text, to that user
-      $http.post("http://localhost:8080/api/schedule/bookTeeTime", userInfo)
+      $http.post("http://localhost:1337/api/schedule/bookTeeTime", userInfo)
         .success(function(data, status){
           console.log('success : ', data);
         })
@@ -52,7 +52,7 @@ function CourseService($http, $q) {
           console.log('error :', data);
         });
       // book the teeTime -- should be combined into one api call with above post to schedule/bookTeeTime
-      $http.post("http://localhost:8080/api/bookteetime",{userId: returnedUser._id, teetimeId: teeTimeId})
+      $http.post("http://localhost:1337/api/bookteetime",{userId: returnedUser._id, teetimeId: teeTimeId})
         .success(function(data, status, headers, config) {
           console.log("data after post to /bookteetime", data);
         })

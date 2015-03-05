@@ -1,9 +1,6 @@
-/**
- * Created by wayne on 2/13/15.
- */
-
 var Course = require('../models/courseModelMongo');
 
+//Add a single course.
 var addCourse = function(data, callback) {
   var course = new Course(data);
   course.save(function(error, course){
@@ -14,6 +11,7 @@ var addCourse = function(data, callback) {
   });
 };
 
+//Find a single course.
 var findCourse = function(data, callback){
 
   Course.findOne(data, function(error, course){
@@ -24,6 +22,7 @@ var findCourse = function(data, callback){
   });
 };
 
+//Find multiple courses, expects an array in data.
 var findCourses = function(data, callback){
   Course.find(data, function(error, courses){
     if (error) {
@@ -43,7 +42,18 @@ var updateCourse = function(findData, updateData, callback) {
   });
 };
 
-
+/**
+ * Performs a geospatial query, for nearest golf courses within specified parameters.
+ *
+ * Note: input parameters are inside the requestData object, 
+ * which, on a deployed server, should be the 
+ * incoming request's body.
+ * @param  {[string]}   requestData.miles [Search radius in miles. Note conversion to radius below.]
+ * @param  {[string]}   requestData.limit [Maximum number of results.]
+ * @param  {[array of numers]}   requestData.coordinates [lat/long coordinates.]
+ * @param  {Function} callback    [description]
+ * @return {[type]}               [description]
+ */
 var findCourseWithinMiles = function(requestData, callback){
   //All must be specified in for
   //schema's geoNear method to not throw an error.
@@ -64,8 +74,6 @@ var findCourseWithinMiles = function(requestData, callback){
       num: limit
     })
     .then(function (results) {
-      // console.log("returned query Unordered Results:", results);
-      //Native sort, sorts results by distance;
       results = results.sort(function(x,y){
         if (x.dis < y.dis){
           return -1;

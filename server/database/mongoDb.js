@@ -1,26 +1,19 @@
-/**
- * Created by wayne on 2/13/15.
- */
-
 var global = require('../config');
 var mongoose = require('mongoose');
 
-
-// open mongo database
-// path and authentication in config.js
+// Connects to MongoDB using credentials in config.js.
+// Note that config.js is in the .gitignore.
 mongoose.connect(global.mongoDb.path, {
   user: global.mongoDb.user,
   pass: global.mongoDb.pass
 });
 
-
-// on connection success ...
 mongoose.connection.on('connected', function(){
   if (global.environment === 'dev') {
     console.log('Mongo database connected.');
   }
 });
-// on connection error ...
+
 mongoose.connection.on('error', function(error){
   if (global.environment === 'dev') {
     console.log('Mongo database error.');

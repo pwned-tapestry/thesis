@@ -1,22 +1,23 @@
+//Require testing framework, helper libraries:
 var expect = require('chai').expect;
-var db = require("../server/database/mongoDb.js");
 var Q = require('q');
-
 var superagent = require('superagent');
 
+//Require database, models, and controllers:
+var db = require("../server/database/mongoDb.js");
 var Course = require("../server/models/courseModelMongo.js");
 var CourseController = require("../server/controllers/courseController.js");
-
-
 var q_findOne = Q.nbind(Course.findOne, Course);
 var q_create = Q.nbind(Course.create, Course);
 var q_find   = Q.nbind(Course.find, Course);
 
-//multiply by this number to convert from radians (returned from mongo) to miles (to send to frontEnd)
+//Rough helper object to convert between radians and miles (or, eventually, kilometers).
+//Multiply by this number to convert from radians (returned from mongo) to miles (to send to frontEnd).
 var radConvertor = {
   toMiles : Math.PI*3959/180
-}
+};
 
+//Declare dummy courses, with geoJSON point coordinates.
 var fiveCourses = [
   {
     name: "Cypress Golf Course",
@@ -52,22 +53,23 @@ var fiveCourses = [
 
 describe('Integration Testing: CRUD Functions & Geospatial : ', function(){
 
-  describe('Schema Unit Tests : inserting 5 local SF golf courses', function(){
-    before(function(done){
-      var coursesDeleted = 0;
-      //delete 5
-      q_find({description: "test"})
-        .then(function(courses){
-          console.log('courses.length : ', courses.length);
-          for (var i = 0 ; i < courses.length; i ++){
-            console.log('deleted '+ ++coursesDeleted + " courses");
-            courses[i].remove();
-          }
-          done();
-        });
+  //Deleting 5 to clear previous test cases.
+  before(function(done){
+    console.log('Running "before" block (Async).');
+    var coursesDeleted = 0;
+    q_find({description: "test"})
+      .then(function(courses){
+        console.log('courses.length : ', courses.length);
+        for (var i = 0 ; i < courses.length; i ++){
+          console.log('Successful delete : '+ ++coursesDeleted);
+          courses[i].remove();
+        }
         done();
-    });
+      });
+      done();
+  });
 
+  describe('Schema Unit Tests : inserting 5 local SF golf courses', function(){
     it('should insert 5 courses', function(done){
       var tasks = [];
       for (var i = 0 ; i < fiveCourses.length; i++){
@@ -82,17 +84,14 @@ describe('Integration Testing: CRUD Functions & Geospatial : ', function(){
           console.log("error :", err);
         });
     })
-
   });
 
   describe('Schema Unit Tests : querying for nearest golf courses',function(){
-    it('successfuly queries using geoNear', function(done){
+    it('successfuly makes simple query using geoNear', function(done){
       Course.geoNear(
         {type: "Point", coordinates: [37.783682, -122.409021]}, 
         {
-          // spherical: true, 
-          // maxDistance: 1 / 6378137, 
-          // distanceMultiplier: 6378137
+          limit: 5
         })
         .then(function (results) {
           console.log('length of results:', results.length);
@@ -108,7 +107,8 @@ describe('Integration Testing: CRUD Functions & Geospatial : ', function(){
       Course.geoNear(
         {type: "Point", coordinates: [37.783682, -122.409021]}, 
         {
-          maxDistance: .08
+          maxDistance: .08  
+          //Note: this is in radians. Please see the mongoDB geospatial docs for detailed conversion instructions.
         })
         .then(function (results) {
           for (var i = 0; i < results.length; i ++){
@@ -141,7 +141,9 @@ describe('Integration Testing: CRUD Functions & Geospatial : ', function(){
     });
   });
 
+  //Single test for new findCourseWithinMiles API endpoint.
   describe('Controller Unit Tests : findCourseWithinMiles',function(done){
+
     var requestData = {
       miles: 15,
       limit: 5,
@@ -157,6 +159,22 @@ describe('Integration Testing: CRUD Functions & Geospatial : ', function(){
         done();
       });      
     });
+
   });
 
+  after(function(done){
+    //Delete 5.
+    console.log('Running "after" block. Cleanup.');
+    var coursesDeleted = 0;
+    q_find({description: "test"})
+      .then(function(courses){
+        console.log('courses.length : ', courses.length);
+        for (var i = 0 ; i < courses.length; i ++){
+          console.log('Successful delete : '+ ++coursesDeleted);
+          courses[i].remove();
+        }
+        done();
+      });
+      done();
+  });
 });

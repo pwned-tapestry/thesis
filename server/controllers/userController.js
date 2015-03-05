@@ -1,10 +1,6 @@
-/**
- * Created by wayne on 2/13/15.
- */
-
-
 var User = require('../models/userModelMongo');
 
+//Add a single user.
 var addUser = function(data, callback) {
   // TODO: add validation code here
   var user = new User(data);
@@ -17,6 +13,7 @@ var addUser = function(data, callback) {
   });
 };
 
+//Find a single user.
 var findUser = function(data, callback) {
   User.findOne(data, function(error, user){
     if (error) {
@@ -44,8 +41,9 @@ var updateUser = function(findData, updateData, callback) {
   });
 };
 
-// TODO: add this to an object
-module.exports.addUser = addUser;
-module.exports.findUser = findUser;
-module.exports.findUsers = findUsers;
-module.exports.updateUser = updateUser;
+module.exports = {
+  addUser     : addUser,
+  findUser    : findUser,
+  findUsers   : findUsers,
+  updateUser  : updateUser
+};

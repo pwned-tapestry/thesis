@@ -1,10 +1,9 @@
-/**
- * Created by wayne on 2/13/15.
- */
-
-
 var mongodb = require('../database/mongoDb');
 
+//Course Schema:
+//Storage locations as geoJSON in an indexed string.
+//Indexing as a '2d coordinate' allows us to store and query for geoJSON, 
+//using MongoDB's native geo-spatial querying methods.
 var CourseSchema = new mongodb.Schema({
   name: String,
   description: String,
@@ -18,16 +17,5 @@ var CourseSchema = new mongodb.Schema({
 CourseSchema.index({location: '2d'});
 
 var Course = mongodb.model('Courses', CourseSchema);
-
-// CourseSchema.methods.geoNear = function(loc){
-//   console.log('in GeoNear');
-//   return this.runCommand({
-//     goeNear: "Courses",
-//     //near: [37.783682, -122.409021]
-//     near: loc,
-//     spherical: true,
-//     limit: 3
-//   })
-// };
 
 module.exports = Course;
